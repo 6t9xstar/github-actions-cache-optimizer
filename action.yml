@@ -1,0 +1,43 @@
+name: 'CachePilot'
+description: 'Find GitHub Actions caches that never hit and print the optimized config.'
+author: '6t9xstar'
+branding:
+  icon: 'zap'
+  color: 'green'
+inputs:
+  path:
+    description: "Workflow file or folder to analyze"
+    required: false
+    default: ".github/workflows"
+  root:
+    description: "Repository root used to resolve hashFiles() patterns"
+    required: false
+    default: "."
+  fail-on:
+    description: "Lowest severity that fails the step: error, warning, info or none"
+    required: false
+    default: "error"
+  args:
+    description: "Extra command-line arguments"
+    required: false
+    default: ""
+runs:
+  using: composite
+  steps:
+    - name: Install CachePilot
+      shell: bash
+      run: cd "$GITHUB_ACTION_PATH" && npm ci --omit=dev --no-audit --no-fund --loglevel=error
+    - name: Run CachePilot
+      shell: bash
+      env:
+        INPUT_PATH: ${{ inputs.path }}
+        INPUT_ROOT: ${{ inputs.root }}
+        INPUT_FAIL_ON: ${{ inputs.fail-on }}
+        INPUT_ARGS: ${{ inputs.args }}
+      run: |
+        set -euo pipefail
+        ARGS=(scan "$INPUT_PATH" --root "$INPUT_ROOT")
+        read -r -a EXTRA <<< "$INPUT_ARGS"
+        CLI="$GITHUB_ACTION_PATH/bin/cachepilot.js"
+        node "$CLI" "${ARGS[@]}" ${EXTRA[@]+"${EXTRA[@]}"} --format markdown --fail-on none >> "$GITHUB_STEP_SUMMARY" || true
+        node "$CLI" "${ARGS[@]}" ${EXTRA[@]+"${EXTRA[@]}"} --format github --fail-on "$INPUT_FAIL_ON"

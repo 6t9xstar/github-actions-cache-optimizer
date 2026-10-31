@@ -1,0 +1,50 @@
+{
+  "name": "gha-cachepilot",
+  "version": "1.0.0",
+  "description": "GitHub Actions cache analyzer and optimizer. Finds actions/cache keys that never hit, hashFiles() patterns that match nothing, missing restore-keys and slow uncached installs, then prints the optimized config.",
+  "type": "module",
+  "bin": {
+    "cachepilot": "bin/cachepilot.js"
+  },
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "action.yml"
+  ],
+  "engines": {
+    "node": ">=18.17"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "dependencies": {
+    "yaml": "^2.9.1"
+  },
+  "keywords": [
+    "github-actions",
+    "actions-cache",
+    "cache",
+    "ci",
+    "hashFiles",
+    "restore-keys",
+    "optimizer",
+    "linter",
+    "workflow",
+    "cli",
+    "github-action",
+    "github actions cache not working"
+  ],
+  "author": "6t9xstar",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/6t9xstar/github-actions-cache-optimizer.git"
+  },
+  "homepage": "https://github.com/6t9xstar/github-actions-cache-optimizer#readme",
+  "bugs": {
+    "url": "https://github.com/6t9xstar/github-actions-cache-optimizer/issues"
+  }
+}
