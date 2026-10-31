@@ -61,7 +61,12 @@ No GitHub token and no network access are needed.
 
 ## Install
 
-Requires Node.js 18.17+ and git.
+**Requirements**
+
+- Node.js 18.17 or newer
+- git (to install straight from GitHub)
+- Windows, macOS or Linux
+- No GitHub token or network access needed.
 
 ```bash
 npx github:6t9xstar/github-actions-cache-optimizer            # run once
